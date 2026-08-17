@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayaan Bites — Fresh Swahili Delicacies, Made Daily</title>
+<meta name="description" content="Ayaan Bites brings you fresh, authentic Swahili breakfast and snacks — mahamri, viazi karai, samosa, kaimati, mabuyu and more — made daily and delivered to your door.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF1E3;
+    --cream-2:#FFFBF4;
+    --ink:#2A1810;
+    --ink-soft:#6B5645;
+    --maroon:#7A2131;
+    --maroon-dark:#551725;
+    --gold:#C1862E;
+    --gold-light:#E7B25C;
+    --line: rgba(42,24,16,0.10);
+    --shadow-soft: 0 20px 60px -25px rgba(42,24,16,0.35);
+    --shadow-card: 0 10px 30px -12px rgba(42,24,16,0.18);
+    --radius-lg: 28px;
+    --radius-md: 18px;
+    --radius-sm: 12px;
+    --ease: cubic-bezier(.22,1,.36,1);
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *,*::before,*::after{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important; }
+  }
+
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3,h4{
+    font-family:'Fraunces', Georgia, serif;
+    font-weight:600;
+    line-height:1.08;
+    margin:0;
+    color:var(--ink);
+    letter-spacing:-0.01em;
+  }
+
+  em{ font-style:italic; color:var(--maroon); font-weight:500; }
+  p{ margin:0; }
+  a{ color:inherit; text-decoration:none; }
+  img,svg{ display:block; max-width:100%; }
+  button{ font-family:inherit; cursor:pointer; }
+
+  .container{
+    max-width:1180px;
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  .eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:12.5px;
+    font-weight:700;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--maroon);
+  }
+  .eyebrow::before{
+    content:'';
+    width:18px;height:2px;
+    background:var(--gold);
+    border-radius:2px;
+  }
+
+  a:focus-visible, button:focus-visible, summary:focus-visible{
+    outline:2.5px solid var(--maroon);
+    outline-offset:3px;
+    border-radius:6px;
+  }
+
+  /* ---------- Reveal-on-scroll ---------- */
+  .reveal{ opacity:0; transform:translateY(28px); transition:opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+  .reveal.is-visible{ opacity:1; transform:translateY(0); }
+  .stagger > *{ transition-delay: calc(var(--i, 0) * 90ms); }
+
+  /* ---------- Navbar ---------- */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    padding:18px 0;
+    transition: padding 0.35s var(--ease), background 0.35s var(--ease), box-shadow 0.35s var(--ease);
+  }
+  .nav.scrolled{
+    padding:10px 0;
+    background:rgba(251,241,227,0.72);
+    backdrop-filter:blur(16px) saturate(160%);
+    -webkit-backdrop-filter:blur(16px) saturate(160%);
+    box-shadow:0 8px 30px -18px rgba(42,24,16,0.4);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-row{ display:flex; align-items:center; justify-content:space-between; gap:20px; }
+  .brand{ display:flex; align-items:center; gap:10px; font-family:'Fraunces',serif; font-weight:600; font-size:20px; }
+  .brand-mark{ width:38px; height:38px; }
+  .nav-links{ display:flex; align-items:center; gap:32px; list-style:none; margin:0; padding:0; }
+  .nav-links a{ font-size:14.5px; font-weight:600; color:var(--ink-soft); transition:color .25s; position:relative; }
+  .nav-links a::after{ content:''; position:absolute; left:0; bottom:-6px; width:0; height:2px; background:var(--maroon); transition:width .3s var(--ease); }
+  .nav-links a:hover{ color:var(--ink); }
+  .nav-links a:hover::after{ width:100%; }
+  .nav-cta{ display:flex; align-items:center; gap:14px; }
+  .nav-toggle{ display:none; background:none; border:none; padding:6px; }
+  .nav-toggle span{ display:block; width:24px; height:2px; background:var(--ink); margin:5px 0; border-radius:2px; transition:transform .3s var(--ease), opacity .3s var(--ease); }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:14px 26px; border-radius:100px; border:none;
+    font-weight:700; font-size:14.5px; letter-spacing:0.01em;
+    transition: transform .35s var(--ease), box-shadow .35s var(--ease), background .35s var(--ease);
+    white-space:nowrap;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg, var(--maroon) 0%, var(--maroon-dark) 100%);
+    color:var(--cream-2);
+    box-shadow:0 12px 26px -12px rgba(122,33,49,0.55);
+  }
+  .btn-primary:hover{ transform:translateY(-3px); box-shadow:0 18px 32px -12px rgba(122,33,49,0.65); }
+  .btn-ghost{
+    background:transparent; color:var(--ink); border:1.5px solid var(--line);
+  }
+  .btn-ghost:hover{ border-color:var(--maroon); color:var(--maroon); transform:translateY(-2px); }
+  .btn-gold{
+    background:linear-gradient(135deg, var(--gold-light), var(--gold));
+    color:var(--maroon-dark);
+    box-shadow:0 12px 26px -12px rgba(193,134,46,0.55);
+  }
+  .btn-gold:hover{ transform:translateY(-3px); box-shadow:0 18px 32px -12px rgba(193,134,46,0.7); }
+  .btn-sm{ padding:11px 20px; font-size:13.5px; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    padding:160px 0 100px;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:'';
+    position:absolute; inset:0;
+    background:
+      radial-gradient(600px 420px at 85% 8%, rgba(193,134,46,0.16), transparent 65%),
+      radial-gradient(500px 380px at 8% 90%, rgba(122,33,49,0.10), transparent 65%);
+    pointer-events:none;
+  }
+  .hero-grid{
+    position:relative;
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:56px;
+    align-items:center;
+  }
+  .hero-copy h1{ font-size:clamp(38px, 5vw, 60px); }
+  .hero-copy p.lede{
+    margin-top:22px; font-size:18px; color:var(--ink-soft); max-width:480px; line-height:1.65;
+  }
+  .hero-actions{ display:flex; gap:16px; margin-top:34px; flex-wrap:wrap; }
+  .hero-badges{ display:flex; gap:26px; margin-top:44px; flex-wrap:wrap; }
+  .hero-badge{ display:flex; align-items:center; gap:10px; }
+  .hero-badge .num{ font-family:'Fraunces',serif; font-size:22px; font-weight:600; color:var(--maroon); }
+  .hero-badge .lbl{ font-size:12.5px; color:var(--ink-soft); max-width:110px; line-height:1.3; }
+
+  /* Signature Spice Wheel */
+  .wheel-wrap{ position:relative; display:flex; align-items:center; justify-content:center; }
+  .wheel-glow{
+    position:absolute; width:480px; height:480px; border-radius:50%;
+    background:radial-gradient(circle, rgba(193,134,46,0.22), transparent 70%);
+    filter:blur(10px);
+  }
+  .wheel{
+    position:relative; width:420px; height:420px; max-width:100%;
+    animation: spin 60s linear infinite;
+  }
+  @keyframes spin{ from{ transform:rotate(0deg); } to{ transform:rotate(360deg); } }
+  .wheel:hover, .wheel:focus-within{ animation-play-state:paused; }
+  .wheel-seg{
+    position:absolute; top:50%; left:50%;
+    width:104px; height:104px;
+    transform-origin:center;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .wheel-seg .chip{
+    animation: counter-spin 60s linear infinite;
+    display:flex; flex-direction:column; align-items:center; gap:6px;
+    background:var(--cream-2); border:1px solid var(--line);
+    border-radius:20px; padding:12px 10px; width:92px;
+    box-shadow:var(--shadow-card);
+    transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  @keyframes counter-spin{ from{ transform:rotate(0deg); } to{ transform:rotate(-360deg); } }
+  .wheel-seg .chip:hover{ transform:translateY(-4px) scale(1.06); box-shadow:0 16px 30px -14px rgba(42,24,16,0.35); }
+  .wheel-seg .chip span{ font-size:10.5px; font-weight:700; color:var(--ink-soft); text-align:center; line-height:1.15; }
+  .wheel-center{
+    position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+    width:150px; height:150px; border-radius:50%;
+    background:linear-gradient(160deg, var(--maroon) 0%, var(--maroon-dark) 100%);
+    display:flex; align-items:center; justify-content:center; text-align:center;
+    box-shadow: inset 0 0 0 6px rgba(255,255,255,0.08), var(--shadow-soft);
+  }
+  .wheel-center strong{ font-family:'Fraunces',serif; color:var(--cream-2); font-size:16px; font-style:italic; display:block; }
+  .wheel-center small{ color:rgba(255,251,244,0.75); font-size:10px; letter-spacing:0.1em; text-transform:uppercase; font-weight:700; }
+  .wheel-ring{ position:absolute; inset:0; border-radius:50%; border:1.5px dashed rgba(122,33,49,0.25); }
+
+  /* ---------- Social proof strip ---------- */
+  .proof{
+    background:var(--cream-2);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:34px 0;
+  }
+  .proof-row{
+    display:flex; justify-content:space-between; gap:24px; flex-wrap:wrap;
+  }
+  .proof-item{ display:flex; align-items:center; gap:12px; flex:1; min-width:180px; }
+  .proof-item .ico{ width:38px; height:38px; flex-shrink:0; }
+  .proof-item strong{ display:block; font-family:'Fraunces',serif; font-size:17px; font-weight:600; }
+  .proof-item span{ font-size:12.5px; color:var(--ink-soft); }
+
+  /* ---------- Section shells ---------- */
+  section{ padding:110px 0; position:relative; }
+  .section-head{ max-width:640px; margin-bottom:64px; }
+  .section-head h2{ font-size:clamp(30px,4vw,44px); margin-top:16px; }
+  .section-head p{ margin-top:18px; font-size:17px; color:var(--ink-soft); }
+  .center{ text-align:center; margin-left:auto; margin-right:auto; }
+
+  /* ---------- Features ---------- */
+  .features-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:22px; }
+  .feature-card{
+    background:var(--cream-2); border:1px solid var(--line); border-radius:var(--radius-md);
+    padding:30px 24px; transition:transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
+  }
+  .feature-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-card); border-color:rgba(193,134,46,0.4); }
+  .feature-ico{
+    width:52px; height:52px; border-radius:14px; margin-bottom:20px;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(135deg, rgba(193,134,46,0.16), rgba(122,33,49,0.10));
+  }
+  .feature-card h3{ font-size:18px; margin-bottom:10px; }
+  .feature-card p{ font-size:14.5px; color:var(--ink-soft); }
+
+  /* ---------- Product showcase ---------- */
+  .showcase-tabs{ display:flex; gap:12px; margin-bottom:40px; }
+  .tab-btn{
+    padding:12px 24px; border-radius:100px; border:1.5px solid var(--line); background:var(--cream-2);
+    font-weight:700; font-size:14px; color:var(--ink-soft); transition:all .3s var(--ease);
+  }
+  .tab-btn[aria-selected="true"]{ background:var(--maroon); color:var(--cream-2); border-color:var(--maroon); }
+  .tab-panel{ display:none; }
+  .tab-panel.active{ display:block; }
+
+  .package-card{
+    display:grid; grid-template-columns:1fr 1.15fr; gap:0;
+    background:var(--cream-2); border:1px solid var(--line); border-radius:var(--radius-lg);
+    overflow:hidden; box-shadow:var(--shadow-card);
+  }
+  .package-intro{ padding:48px; display:flex; flex-direction:column; justify-content:center; background:linear-gradient(160deg, rgba(122,33,49,0.06), transparent); }
+  .package-intro h3{ font-size:28px; margin:14px 0 14px; }
+  .package-intro p{ color:var(--ink-soft); font-size:15px; margin-bottom:22px; }
+  .package-price{ font-family:'Fraunces',serif; font-size:26px; color:var(--maroon); font-weight:600; }
+  .package-price span{ font-size:13px; color:var(--ink-soft); font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; }
+
+  .item-grid{ padding:36px; display:grid; grid-template-columns:repeat(2,1fr); gap:18px; }
+  .item-card{
+    display:flex; gap:14px; align-items:flex-start; padding:18px; border-radius:var(--radius-sm);
+    background:var(--cream); transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .item-card:hover{ transform:translateY(-4px); box-shadow:var(--shadow-card); }
+  .item-ico{ width:46px; height:46px; flex-shrink:0; }
+  .item-card h4{ font-size:15.5px; font-weight:700; font-family:'Plus Jakarta Sans',sans-serif; margin-bottom:4px; }
+  .item-card p{ font-size:13px; color:var(--ink-soft); line-height:1.45; }
+
+  /* ---------- Benefits ---------- */
+  .benefits{ display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; }
+  .benefit-visual{ position:relative; border-radius:var(--radius-lg); overflow:hidden; aspect-ratio:1/1; background:linear-gradient(160deg, var(--maroon), var(--maroon-dark)); display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow-soft); }
+  .benefit-visual .pattern{ position:absolute; inset:0; opacity:0.18; }
+  .benefit-list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:22px; }
+  .benefit-list li{ display:flex; gap:18px; align-items:flex-start; }
+  .benefit-num{
+    width:44px; height:44px; border-radius:50%; flex-shrink:0;
+    background:var(--cream-2); border:1.5px solid var(--gold);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .benefit-list h4{ font-size:17px; font-family:'Fraunces',serif; font-weight:600; margin-bottom:5px; }
+  .benefit-list p{ font-size:14.5px; color:var(--ink-soft); }
+
+  /* ---------- Testimonials ---------- */
+  .testi-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+  .testi-card{
+    background:var(--cream-2); border:1px solid var(--line); border-radius:var(--radius-md);
+    padding:30px; display:flex; flex-direction:column; gap:18px;
+    transition:transform .4s var(--ease), box-shadow .4s var(--ease);
+  }
+  .testi-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-card); }
+  .stars{ display:flex; gap:3px; color:var(--gold); }
+  .testi-card p.quote{ font-size:15px; color:var(--ink); line-height:1.6; }
+  .testi-who{ display:flex; align-items:center; gap:12px; margin-top:auto; }
+  .avatar{
+    width:42px; height:42px; border-radius:50%; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-weight:600; color:var(--cream-2);
+  }
+  .testi-who strong{ display:block; font-size:14px; }
+  .testi-who span{ font-size:12.5px; color:var(--ink-soft); }
+
+  /* ---------- Pricing ---------- */
+  .pricing-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:24px; align-items:stretch; }
+  .price-card{
+    background:var(--cream-2); border:1.5px solid var(--line); border-radius:var(--radius-lg);
+    padding:36px 30px; display:flex; flex-direction:column; position:relative;
+    transition:transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
+  }
+  .price-card:hover{ transform:translateY(-8px); box-shadow:var(--shadow-soft); }
+  .price-card.featured{ border-color:var(--gold); background:linear-gradient(170deg, var(--cream-2), #fff6e6); }
+  .price-tag{ position:absolute; top:-14px; right:28px; background:var(--gold); color:var(--maroon-dark); font-size:11.5px; font-weight:800; letter-spacing:0.06em; padding:6px 14px; border-radius:100px; text-transform:uppercase; }
+  .price-card h3{ font-size:20px; margin-bottom:6px; }
+  .price-card .desc{ font-size:13.5px; color:var(--ink-soft); margin-bottom:22px; }
+  .price-amount{ font-family:'Fraunces',serif; font-size:40px; font-weight:600; color:var(--maroon); margin-bottom:4px; }
+  .price-amount span{ font-size:14px; color:var(--ink-soft); font-family:'Plus Jakarta Sans',sans-serif; font-weight:600; }
+  .price-list{ list-style:none; margin:26px 0 30px; padding:0; display:flex; flex-direction:column; gap:12px; }
+  .price-list li{ display:flex; gap:10px; align-items:flex-start; font-size:14px; color:var(--ink-soft); }
+  .price-list li svg{ flex-shrink:0; margin-top:2px; }
+
+  /* ---------- FAQ ---------- */
+  .faq-list{ max-width:760px; margin:0 auto; display:flex; flex-direction:column; gap:14px; }
+  .faq-item{ background:var(--cream-2); border:1px solid var(--line); border-radius:var(--radius-sm); overflow:hidden; }
+  .faq-item summary{
+    list-style:none; display:flex; align-items:center; justify-content:space-between; gap:20px;
+    padding:22px 26px; font-weight:700; font-size:15.5px; cursor:pointer;
+  }
+  .faq-item summary::-webkit-details-marker{ display:none; }
+  .faq-plus{ width:22px; height:22px; position:relative; flex-shrink:0; }
+  .faq-plus::before, .faq-plus::after{ content:''; position:absolute; background:var(--maroon); border-radius:2px; transition:transform .35s var(--ease); }
+  .faq-plus::before{ width:100%; height:2px; top:50%; left:0; transform:translateY(-50%); }
+  .faq-plus::after{ width:2px; height:100%; left:50%; top:0; transform:translateX(-50%); }
+  details[open] .faq-plus::after{ transform:translateX(-50%) rotate(90deg); opacity:0; }
+  .faq-item .faq-body{ padding:0 26px 24px; font-size:14.5px; color:var(--ink-soft); line-height:1.65; }
+
+  /* ---------- CTA ---------- */
+  .cta-band{
+    background:linear-gradient(135deg, var(--maroon) 0%, var(--maroon-dark) 100%);
+    border-radius:var(--radius-lg);
+    padding:70px 60px;
+    display:flex; align-items:center; justify-content:space-between; gap:40px;
+    position:relative; overflow:hidden;
+    box-shadow:var(--shadow-soft);
+  }
+  .cta-band::before{
+    content:''; position:absolute; width:340px; height:340px; border-radius:50%;
+    background:radial-gradient(circle, rgba(231,178,92,0.25), transparent 70%);
+    top:-120px; right:-60px;
+  }
+  .cta-band h2{ color:var(--cream-2); font-size:clamp(28px,3.6vw,38px); max-width:480px; }
+  .cta-band p{ color:rgba(255,251,244,0.8); margin-top:14px; font-size:15.5px; max-width:420px; }
+  .cta-actions{ display:flex; gap:16px; flex-shrink:0; flex-wrap:wrap; }
+
+  /* ---------- Footer ---------- */
+  footer{ background:var(--ink); color:rgba(255,251,244,0.75); padding:70px 0 30px; }
+  .footer-grid{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; padding-bottom:50px; border-bottom:1px solid rgba(255,251,244,0.12); }
+  .footer-brand .brand{ color:var(--cream-2); }
+  .footer-brand p{ margin-top:16px; font-size:14px; max-width:280px; color:rgba(255,251,244,0.6); }
+  .footer-col h5{ color:var(--cream-2); font-size:13px; letter-spacing:0.08em; text-transform:uppercase; margin-bottom:18px; font-weight:700; }
+  .footer-col ul{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px; }
+  .footer-col a{ font-size:14px; transition:color .25s; }
+  .footer-col a:hover{ color:var(--gold-light); }
+  .footer-bottom{ display:flex; justify-content:space-between; align-items:center; padding-top:26px; font-size:13px; flex-wrap:wrap; gap:14px; }
+  .footer-social{ display:flex; gap:14px; }
+  .footer-social a{ width:38px; height:38px; border-radius:50%; border:1px solid rgba(255,251,244,0.18); display:flex; align-items:center; justify-content:center; transition:all .3s var(--ease); }
+  .footer-social a:hover{ background:var(--gold); border-color:var(--gold); color:var(--ink); transform:translateY(-3px); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 980px){
+    .features-grid{ grid-template-columns:repeat(2,1fr); }
+    .package-card{ grid-template-columns:1fr; }
+    .benefits{ grid-template-columns:1fr; }
+    .testi-grid{ grid-template-columns:1fr 1fr; }
+    .pricing-grid{ grid-template-columns:1fr 1fr; }
+    .footer-grid{ grid-template-columns:1fr 1fr; }
+    .hero-grid{ grid-template-columns:1fr; text-align:left; }
+    .wheel-wrap{ margin-top:20px; }
+  }
+  @media (max-width: 720px){
+    .nav-links, .nav-cta .btn-ghost{ display:none; }
+    .nav-toggle{ display:block; }
+    body.menu-open .nav-links{
+      display:flex; position:fixed; inset:0; top:64px; flex-direction:column; padding:36px 28px; gap:26px;
+      background:var(--cream); z-index:99; height:calc(100vh - 64px);
+    }
+    .hero{ padding:130px 0 70px; }
+    .features-grid{ grid-template-columns:1fr; }
+    .item-grid{ grid-template-columns:1fr; }
+    .package-intro{ padding:36px 28px; }
+    .testi-grid{ grid-template-columns:1fr; }
+    .pricing-grid{ grid-template-columns:1fr; }
+    .footer-grid{ grid-template-columns:1fr; gap:32px; }
+    .cta-band{ flex-direction:column; text-align:center; padding:50px 28px; }
+    .cta-band p{ margin-left:auto; margin-right:auto; }
+    .proof-row{ flex-direction:column; gap:20px; }
+    section{ padding:76px 0; }
+    .wheel{ width:320px; height:320px; }
+    .wheel-seg{ width:80px; height:80px; }
+    .wheel-seg .chip{ width:74px; padding:9px 6px; }
+    .wheel-center{ width:118px; height:118px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= NAVBAR ================= -->
+<nav class="nav" id="nav">
+  <div class="container nav-row">
+    <a href="#top" class="brand">
+      <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+        <circle cx="24" cy="24" r="22" fill="none" stroke="url(#g1)" stroke-width="3"/>
+        <circle cx="24" cy="24" r="9" fill="var(--cream)"/>
+        <path d="M24 4a20 20 0 0 1 0 40" stroke="var(--maroon)" stroke-width="3" fill="none"/>
+        <defs><linearGradient id="g1" x1="0" y1="0" x2="48" y2="48"><stop stop-color="var(--gold)"/><stop offset="1" stop-color="var(--maroon)"/></linearGradient></defs>
+      </svg>
+      Ayaan Bites
+    </a>
+    <ul class="nav-links">
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#why-us">Why Us</a></li>
+      <li><a href="#reviews">Reviews</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#pricing" class="btn btn-ghost btn-sm">See Prices</a>
+      <a href="#order" class="btn btn-primary btn-sm">Order Now</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobileMenuRegion">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="top">
+  <div class="container hero-grid">
+    <div class="hero-copy reveal">
+      <span class="eyebrow">Fresh · Coastal · Handmade Daily</span>
+      <h1>Swahili flavor, <em>straight</em> from our jiko to your table.</h1>
+      <p class="lede">Ayaan Bites makes real coastal Kenyan breakfast and snacks the way babu and bibi did — fried fresh each morning, no shortcuts, no preservatives. Karibu, taste home.</p>
+      <div class="hero-actions">
+        <a href="#pricing" class="btn btn-primary">Order Your Box</a>
+        <a href="#menu" class="btn btn-ghost">Explore the Menu</a>
+      </div>
+      <div class="hero-badges">
+        <div class="hero-badge"><span class="num">10+</span><span class="lbl">Signature coastal recipes</span></div>
+        <div class="hero-badge"><span class="num">100%</span><span class="lbl">Fresh, made-to-order daily</span></div>
+        <div class="hero-badge"><span class="num">2hr</span><span class="lbl">Kitchen-to-doorstep window</span></div>
+      </div>
+    </div>
+    <div class="wheel-wrap reveal" style="transition-delay:120ms">
+      <div class="wheel-glow" aria-hidden="true"></div>
+      <div class="wheel" role="img" aria-label="Wheel of Ayaan Bites signature dishes: mahamri, viazi karai, samosa, ukwaju, visheti, kaimati, mitai, chauro, mabuyu, achari">
+        <div class="wheel-ring" aria-hidden="true"></div>
+        <div class="wheel-center"><strong>Ayaan</strong><small>Bites</small></div>
+        <!-- 10 segments placed via inline transform+rotation, counter-rotated chip keeps label upright -->
+        <div class="wheel-seg" style="transform:translate(-50%,-50%) rotate(0deg) translate(0,-155px)"><div class="chip"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 L20 19 H4 Z" fill="var(--gold)"/></svg><span>Mahamri</span></div></div>
+        <div class="wheel-seg" style="transform:translate(-50%,-50%) rotate(36deg) translate(0,-155px)"><div class="chip"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="var(--gold-light)"/><circle cx="12" cy="12" r="3" fill="var(--cream-2)"/></svg><span>Viazi Karai</span></div></div>
+        <div class="wheel-seg" style="transform:translate(-50%,-50%) rotate(72deg) translate(0,-155px)"><div class="chip"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 L22 20 H2 Z" fill="var(--maroon)"/></svg><span>Samosa</span></div></div>
+        <div class="wheel-seg" style="transform:translate(-50%,-50%) rotate(108deg) translate(0,-155px)"><div class="chip"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="12" rx="9" ry="6" fill="var(--maroon)"/></svg><span>Ukwaju</span></div></div>
+        <div class="wheel-seg" style="transform:translate(-50%,-50%) rotate(144deg) translate(0,-155px)"><div class="chip"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12 Q12 2 20 12 Q12 22 4 12 Z" fill="var(--gold)"/></svg><span>Visheti</span></div></div>
+        <div class="wheel-seg" style="transform:translate(-50%,-50%) rotate(180deg) translate(0,-155px)"><div class="chip"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><circle cx="8" cy="10" r="4" fill="var(--gold-light)"/><circle cx="15" cy="14" r="4" fill="var(--gold)"/></svg><span>Kaimati</span></div></div>
+        <div class="wheel-seg" style="transform:translate(-50%,-50%) rotate(216deg) translate(0,-155px)"><div class="chip"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="4" fill="var(--maroon)" transform="rotate(45 12 12)"/></svg><span>Mitai</span></div></div>
+        <div class="wheel-seg" style="transform:translate(-50%,-50%) rotate(252deg) translate(0,-155px)"><div class="chip"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12,3 21,9 18,20 6,20 3,9" fill="var(--gold)"/></svg><span>Chauro</span></div></div>
+        <div class="wheel-seg" style="transform:translate(-50%,-50%) rotate(288deg) translate(0,-155px)"><div class="chip"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="9" r="3" fill="var(--maroon)"/><circle cx="16" cy="9" r="3" fill="var(--maroon)"/><circle cx="12" cy="16" r="3" fill="var(--maroon)"/></svg><span>Mabuyu</span></div></div>
+        <div class="wheel-seg" style="transform:translate(-50%,-50%) rotate(324deg) translate(0,-155px)"><div class="chip"><svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="4" width="12" height="16" rx="3" fill="var(--gold-light)"/><rect x="6" y="4" width="12" height="5" rx="2" fill="var(--maroon)"/></svg><span>Achari</span></div></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ================= SOCIAL PROOF ================= -->
+<div class="proof">
+  <div class="container proof-row reveal">
+    <div class="proof-item"><svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l2.5 6.5L21 9l-5 4.5L17.5 21 12 17l-5.5 4L8 13.5 3 9l6.5-.5z" fill="var(--gold)"/></svg><div><strong>4.9 / 5</strong><span>average customer rating</span></div></div>
+    <div class="proof-item"><svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="var(--maroon)"/><path d="M4 20c0-4.4 3.6-7 8-7s8 2.6 8 7" stroke="var(--maroon)" stroke-width="2" fill="none"/></svg><div><strong>500+</strong><span>homes and offices fed monthly</span></div></div>
+    <div class="proof-item"><svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2" stroke="var(--maroon)" stroke-width="2"/><path d="M8 7V5a4 4 0 0 1 8 0v2" stroke="var(--gold)" stroke-width="2" fill="none"/></svg><div><strong>0</strong><span>preservatives, ever</span></div></div>
+    <div class="proof-item"><svg class="ico" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2v20M4 8l8-6 8 6" stroke="var(--maroon)" stroke-width="2" fill="none"/></svg><div><strong>Same-day</strong><span>fresh cooking &amp; delivery</span></div></div>
+  </div>
+</div>
+
+<!-- ================= WHY US / FEATURES ================= -->
+<section id="why-us">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">Why Ayaan Bites</span>
+      <h2>Made fresh. Made proper. Made with heart.</h2>
+      <p>We cook every batch the morning it ships — the same coastal recipes passed down through generations, without shortcuts.</p>
+    </div>
+    <div class="features-grid stagger">
+      <div class="feature-card reveal" style="--i:0">
+        <div class="feature-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12a8 8 0 1 1 16 0" stroke="var(--maroon)" stroke-width="2"/><path d="M12 12l4-4" stroke="var(--gold)" stroke-width="2"/></svg></div>
+        <h3>Cooked fresh, same day</h3>
+        <p>No freezers, no batch-week cooking. Everything is fried, fermented or steamed the morning it's delivered.</p>
+      </div>
+      <div class="feature-card reveal" style="--i:1">
+        <div class="feature-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z" fill="var(--gold)"/></svg></div>
+        <h3>Authentic coastal recipes</h3>
+        <p>Coconut, cardamom, tamarind and cloves — spiced the traditional Swahili way, not watered down for anyone.</p>
+      </div>
+      <div class="feature-card reveal" style="--i:2">
+        <div class="feature-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 2l7 4v6c0 5-3 8-7 10-4-2-7-5-7-10V6l7-4z" stroke="var(--maroon)" stroke-width="2" fill="none"/></svg></div>
+        <h3>Hygienic, sealed packaging</h3>
+        <p>Every box is packed by hand in food-safe, leak-proof containers so flavor and freshness travel intact.</p>
+      </div>
+      <div class="feature-card reveal" style="--i:3">
+        <div class="feature-ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 12h18M12 3v18" stroke="var(--gold)" stroke-width="2"/><circle cx="12" cy="12" r="9" stroke="var(--maroon)" stroke-width="2" fill="none"/></svg></div>
+        <h3>For every occasion</h3>
+        <p>Morning tea, office breakfast, weekend gathering or event catering — sized to fit the moment.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRODUCT SHOWCASE / MENU ================= -->
+<section id="menu" style="background:var(--cream-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="container">
+    <div class="section-head reveal">
+      <span class="eyebrow">The Menu</span>
+      <h2>Two ways to enjoy Ayaan Bites.</h2>
+      <p>A hearty coastal breakfast package for the morning table, and a snacks basket for tea time, guests or a sweet-and-savory craving.</p>
+    </div>
+
+    <div class="showcase-tabs reveal" role="tablist" aria-label="Menu categories">
+      <button class="tab-btn" role="tab" id="tab-breakfast" aria-selected="true" aria-controls="panel-breakfast">Breakfast Package</button>
+      <button class="tab-btn" role="tab" id="tab-snacks" aria-selected="false" aria-controls="panel-snacks">Snacks Package</button>
+    </div>
+
+    <div class="tab-panel active reveal" id="panel-breakfast" role="tabpanel" aria-labelledby="tab-breakfast">
+      <div class="package-card">
+        <div class="package-intro">
+          <span class="eyebrow">Package One</span>
+          <h3>Breakfast Package</h3>
+          <p>A complete coastal breakfast spread — crisp, sweet, savory and tangy in one box. Best enjoyed with a hot cup of chai.</p>
+          <div class="package-price">From KSh 450 <span>/ box, serves 1</span></div>
+        </div>
+        <div class="item-grid">
+          <div class="item-card"><svg class="item-ico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="none" stroke="var(--gold)" stroke-width="2"/><path d="M20 8 L30 30 H10 Z" fill="var(--gold-light)"/></svg><div><h4>Mahamri</h4><p>Soft, coconut-cardamom fried bread with a golden, pillowy crumb.</p></div></div>
+          <div class="item-card"><svg class="item-ico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="none" stroke="var(--gold)" stroke-width="2"/><circle cx="20" cy="20" r="12" fill="var(--gold-light)"/><circle cx="20" cy="20" r="4" fill="var(--cream-2)"/></svg><div><h4>Viazi Karai</h4><p>Turmeric-battered potato slices, fried crisp and served with tangy chutney.</p></div></div>
+          <div class="item-card"><svg class="item-ico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="none" stroke="var(--maroon)" stroke-width="2"/><path d="M20 6 L34 32 H6 Z" fill="var(--maroon)"/></svg><div><h4>Samosa</h4><p>Hand-folded pastry parcels packed with spiced, savory filling.</p></div></div>
+          <div class="item-card"><svg class="item-ico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="none" stroke="var(--maroon)" stroke-width="2"/><ellipse cx="20" cy="20" rx="13" ry="9" fill="var(--maroon)"/></svg><div><h4>Ukwaju</h4><p>House-made tamarind dipping sauce — sweet, sour and utterly addictive.</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel reveal" id="panel-snacks" role="tabpanel" aria-labelledby="tab-snacks">
+      <div class="package-card">
+        <div class="package-intro">
+          <span class="eyebrow">Package Two</span>
+          <h3>Snacks Basket</h3>
+          <p>Six coastal favorites in one basket — a little sweet, a little spiced, a little sour. Perfect for tea time or sharing.</p>
+          <div class="package-price">From KSh 600 <span>/ basket, serves 2–3</span></div>
+        </div>
+        <div class="item-grid">
+          <div class="item-card"><svg class="item-ico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="none" stroke="var(--gold)" stroke-width="2"/><path d="M10 20 Q20 6 30 20 Q20 34 10 20 Z" fill="var(--gold)"/></svg><div><h4>Visheti</h4><p>Crisp, lightly sweet fried dough twists, a coastal teatime classic.</p></div></div>
+          <div class="item-card"><svg class="item-ico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="none" stroke="var(--gold)" stroke-width="2"/><circle cx="15" cy="18" r="6" fill="var(--gold-light)"/><circle cx="25" cy="23" r="6" fill="var(--gold)"/></svg><div><h4>Kaimati</h4><p>Golden dough balls soaked in fragrant sugar syrup — bite-sized sweetness.</p></div></div>
+          <div class="item-card"><svg class="item-ico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="none" stroke="var(--maroon)" stroke-width="2"/><rect x="10" y="10" width="20" height="20" rx="6" fill="var(--maroon)" transform="rotate(45 20 20)"/></svg><div><h4>Mitai</h4><p>Traditional coastal sweets, delicately spiced and lightly sugared.</p></div></div>
+          <div class="item-card"><svg class="item-ico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="none" stroke="var(--gold)" stroke-width="2"/><polygon points="20,8 32,15 28,30 12,30 8,15" fill="var(--gold)"/></svg><div><h4>Chauro</h4><p>Spiced, savoury coastal bites with a satisfying golden crunch.</p></div></div>
+          <div class="item-card"><svg class="item-ico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="none" stroke="var(--maroon)" stroke-width="2"/><circle cx="15" cy="16" r="4" fill="var(--maroon)"/><circle cx="25" cy="16" r="4" fill="var(--maroon)"/><circle cx="20" cy="25" r="4" fill="var(--maroon)"/></svg><div><h4>Mabuyu</h4><p>Sweet-tart candied baobab seeds — a nostalgic coastal treat.</p></div></div>
+          <div class="item-card"><svg class="item-ico" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="19" fill="none" stroke="var(--gold)" stroke-width="2"/><rect x="12" y="8" width="16" height="24" rx="4" fill="var(--gold-light)"/><rect x="12" y="8" width="16" height="7" rx="3" fill="var(--maroon)"/></svg><div><h4>Achari</h4><p>House-pickled fruit and vegetables, sharp, spiced and refreshing.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= BENEFITS ================= -->
+<section>
+  <div class="container benefits">
+    <div class="benefit-visual reveal">
+      <svg class="pattern" viewBox="0 0 200 200" aria-hidden="true">
+        <circle cx="100" cy="100" r="90" fill="none" stroke="var(--gold-light)" stroke-width="2"/>
+        <circle cx="100" cy="100" r="65" fill="none" stroke="var(--gold-light)" stroke-width="2"/>
+        <circle cx="100" cy="100" r="40" fill="none" stroke="var(--gold-light)" stroke-width="2"/>
+      </svg>
+      <svg width="120" height="120" viewBox="0 0 24 24" fill="none" style="position:relative;" aria-hidden="true">
+        <path d="M12 2c-4 4-7 7-7 11a7 7 0 0 0 14 0c0-4-3-7-7-11z" fill="var(--gold-light)"/>
+      </svg>
+    </div>
+    <div>
+      <div class="section-head reveal" style="margin-bottom:36px;">
+        <span class="eyebrow">Why Families Choose Us</span>
+        <h2>Freshness you can taste, service you can rely on.</h2>
+      </div>
+      <ul class="benefit-list stagger">
+        <li class="reveal" style="--i:0">
+          <div class="benefit-num"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="var(--maroon)" stroke-width="2.5" fill="none"/></svg></div>
+          <div><h4>Freshness guarantee</h4><p>Cooked the same morning and delivered within a 2-hour window — never held over from the day before.</p></div>
+        </li>
+        <li class="reveal" style="--i:1">
+          <div class="benefit-num"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="var(--maroon)" stroke-width="2.5" fill="none"/></svg></div>
+          <div><h4>Doorstep delivery</h4><p>Order on WhatsApp or online and we bring it to your home or office, packed to stay fresh in transit.</p></div>
+        </li>
+        <li class="reveal" style="--i:2">
+          <div class="benefit-num"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="var(--maroon)" stroke-width="2.5" fill="none"/></svg></div>
+          <div><h4>Built for gatherings</h4><p>Hosting family or an office breakfast? Party platters and bulk baskets scale to any headcount.</p></div>
+        </li>
+        <li class="reveal" style="--i:3">
+          <div class="benefit-num"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="var(--maroon)" stroke-width="2.5" fill="none"/></svg></div>
+          <div><h4>Made to your taste</h4><p>Tell us your spice level or swap an item — every order can be tailored to your household.</p></div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<section id="reviews" style="background:var(--cream-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">Loved Locally</span>
+      <h2>What our customers are saying</h2>
+    </div>
+    <div class="testi-grid stagger">
+      <div class="testi-card reveal" style="--i:0">
+        <div class="stars" aria-hidden="true">★★★★★</div>
+        <p class="quote">The mahamri taste exactly like my grandmother's — soft inside, and the ukwaju dip is unreal. Now our Saturday breakfast order.</p>
+        <div class="testi-who"><div class="avatar" style="background:var(--maroon)">A</div><div><strong>Amina K.</strong><span>Kiambu</span></div></div>
+      </div>
+      <div class="testi-card reveal" style="--i:1">
+        <div class="stars" aria-hidden="true">★★★★★</div>
+        <p class="quote">Ordered the snacks basket for a get-together and the mabuyu and kaimati disappeared in minutes. Everyone asked where it was from.</p>
+        <div class="testi-who"><div class="avatar" style="background:var(--gold)">J</div><div><strong>James M.</strong><span>Nairobi</span></div></div>
+      </div>
+      <div class="testi-card reveal" style="--i:2">
+        <div class="stars" aria-hidden="true">★★★★★</div>
+        <p class="quote">Genuinely fresh, not oily like most vendors. The samosas hold their crunch even after delivery. Consistent every time.</p>
+        <div class="testi-who"><div class="avatar" style="background:var(--maroon-dark)">F</div><div><strong>Fatuma S.</strong><span>Thika Road</span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRICING ================= -->
+<section id="pricing">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">Simple Pricing</span>
+      <h2>Pick your size, we'll handle the rest.</h2>
+      <p>All boxes are cooked to order — pricing scales with how many mouths you're feeding.</p>
+    </div>
+    <div class="pricing-grid stagger">
+      <div class="price-card reveal" style="--i:0">
+        <h3>Solo Breakfast Box</h3>
+        <p class="desc">One full breakfast package — perfect for a single morning treat.</p>
+        <div class="price-amount">KSh 450<span> / box</span></div>
+        <ul class="price-list">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="var(--gold)" stroke-width="2.5"/></svg>Mahamri, viazi karai, samosa &amp; ukwaju</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="var(--gold)" stroke-width="2.5"/></svg>Serves 1 person</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="var(--gold)" stroke-width="2.5"/></svg>Sealed, ready-to-eat packaging</li>
+        </ul>
+        <a href="#order" class="btn btn-ghost" style="margin-top:auto;">Order this box</a>
+      </div>
+      <div class="price-card featured reveal" style="--i:1">
+        <span class="price-tag">Most Popular</span>
+        <h3>Family Feast Platter</h3>
+        <p class="desc">A generous breakfast platter for the whole household or small gathering.</p>
+        <div class="price-amount">KSh 1,600<span> / platter</span></div>
+        <ul class="price-list">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="var(--maroon)" stroke-width="2.5"/></svg>Full breakfast package, serves 4–5</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="var(--maroon)" stroke-width="2.5"/></svg>Extra ukwaju dip included</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="var(--maroon)" stroke-width="2.5"/></svg>Free doorstep delivery</li>
+        </ul>
+        <a href="#order" class="btn btn-primary" style="margin-top:auto;">Order this platter</a>
+      </div>
+      <div class="price-card reveal" style="--i:2">
+        <h3>Snacks Basket</h3>
+        <p class="desc">All six coastal snacks in one shareable basket for tea time or guests.</p>
+        <div class="price-amount">KSh 600<span> / basket</span></div>
+        <ul class="price-list">
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="var(--gold)" stroke-width="2.5"/></svg>Visheti, kaimati, mitai, chauro, mabuyu &amp; achari</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="var(--gold)" stroke-width="2.5"/></svg>Serves 2–3 people</li>
+          <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 12l6 6L20 6" stroke="var(--gold)" stroke-width="2.5"/></svg>Great for sharing over chai</li>
+        </ul>
+        <a href="#order" class="btn btn-ghost" style="margin-top:auto;">Order this basket</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FAQ ================= -->
+<section id="faq" style="background:var(--cream-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+  <div class="container">
+    <div class="section-head center reveal">
+      <span class="eyebrow">Good to Know</span>
+      <h2>Frequently asked questions</h2>
+    </div>
+    <div class="faq-list reveal">
+      <details class="faq-item" open>
+        <summary>How do I place an order?<span class="faq-plus"></span></summary>
+        <div class="faq-body">Message us on WhatsApp or use the order button on this page with your preferred package, quantity and delivery address. We confirm your order and cooking time right away.</div>
+      </details>
+      <details class="faq-item">
+        <summary>How fresh is the food really?<span class="faq-plus"></span></summary>
+        <div class="faq-body">Everything is cooked the same day it's delivered — nothing is pre-made and frozen. Most orders reach you within two hours of leaving the kitchen.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Can I customize my order or spice level?<span class="faq-plus"></span></summary>
+        <div class="faq-body">Yes. Let us know your preferred spice level, or swap out an item you'd rather skip, when you place your order.</div>
+      </details>
+      <details class="faq-item">
+        <summary>Do you cater for events or bulk orders?<span class="faq-plus"></span></summary>
+        <div class="faq-body">Absolutely. Send us your event date, headcount and package preference and we'll put together a bulk quote for you.</div>
+      </details>
+      <details class="faq-item">
+        <summary>What areas do you deliver to?<span class="faq-plus"></span></summary>
+        <div class="faq-body">We currently deliver across Nairobi and Kiambu County, with same-day delivery windows. Message us to confirm delivery to your area.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section id="order">
+  <div class="container">
+    <div class="cta-band reveal">
+      <div>
+        <h2>Karibu — your first box is one message away.</h2>
+        <p>Tell us your package, size and delivery address, and we'll have it cooking within the hour.</p>
+      </div>
+      <div class="cta-actions">
+        <a href="#" class="btn btn-gold">Order on WhatsApp</a>
+        <a href="#pricing" class="btn btn-ghost" style="border-color:rgba(255,251,244,0.35); color:var(--cream-2);">View Pricing</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#top" class="brand">
+          <svg class="brand-mark" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+            <circle cx="24" cy="24" r="22" fill="none" stroke="var(--gold-light)" stroke-width="3"/>
+            <circle cx="24" cy="24" r="9" fill="var(--ink)"/>
+            <path d="M24 4a20 20 0 0 1 0 40" stroke="var(--cream-2)" stroke-width="3" fill="none"/>
+          </svg>
+          Ayaan Bites
+        </a>
+        <p>Fresh Swahili coastal breakfast and snacks, cooked daily and delivered across Nairobi &amp; Kiambu.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Explore</h5>
+        <ul>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#why-us">Why Us</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Support</h5>
+        <ul>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#order">Order Now</a></li>
+          <li><a href="#top">Delivery Areas</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="#">WhatsApp Us</a></li>
+          <li><a href="#">hello@ayaanbites.co.ke</a></li>
+          <li><a href="#">Nairobi &amp; Kiambu, Kenya</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Ayaan Bites. All rights reserved.</span>
+      <div class="footer-social">
+        <a href="#" aria-label="Ayaan Bites on Instagram"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/></svg></a>
+        <a href="#" aria-label="Ayaan Bites on WhatsApp"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.7-1.2A9 9 0 1 0 12 3z" stroke="currentColor" stroke-width="2" fill="none"/></svg></a>
+        <a href="#" aria-label="Ayaan Bites on Facebook"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M14 9h3V6h-3c-2 0-3 1.2-3 3v2H9v3h2v6h3v-6h3l1-3h-4V9c0-.6.2-1 1-1z" fill="currentColor"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // Sticky nav shadow
+  var nav = document.getElementById('nav');
+  function onScroll(){
+    if(window.scrollY > 40){ nav.classList.add('scrolled'); } else { nav.classList.remove('scrolled'); }
+  }
+  document.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  // Mobile menu toggle
+  var toggle = document.getElementById('navToggle');
+  toggle.addEventListener('click', function(){
+    var open = document.body.classList.toggle('menu-open');
+    toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  document.querySelectorAll('.nav-links a').forEach(function(a){
+    a.addEventListener('click', function(){
+      document.body.classList.remove('menu-open');
+      toggle.setAttribute('aria-expanded','false');
+    });
+  });
+
+  // Scroll reveal
+  var revealEls = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold:0.12, rootMargin:'0px 0px -60px 0px' });
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  // Menu tabs
+  var tabBreakfast = document.getElementById('tab-breakfast');
+  var tabSnacks = document.getElementById('tab-snacks');
+  var panelBreakfast = document.getElementById('panel-breakfast');
+  var panelSnacks = document.getElementById('panel-snacks');
+  function activate(tab){
+    var isBreakfast = tab === 'breakfast';
+    tabBreakfast.setAttribute('aria-selected', isBreakfast ? 'true' : 'false');
+    tabSnacks.setAttribute('aria-selected', isBreakfast ? 'false' : 'true');
+    panelBreakfast.classList.toggle('active', isBreakfast);
+    panelSnacks.classList.toggle('active', !isBreakfast);
+  }
+  tabBreakfast.addEventListener('click', function(){ activate('breakfast'); });
+  tabSnacks.addEventListener('click', function(){ activate('snacks'); });
+})();
+</script>
+</body>
+</html>
